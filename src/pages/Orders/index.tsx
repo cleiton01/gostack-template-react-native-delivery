@@ -27,12 +27,21 @@ interface Food {
   thumbnail_url: string;
 }
 
+interface Order {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  thumbnail_url: string;
+}
+
 const Orders: React.FC = () => {
   const [orders, setOrders] = useState<Food[]>([]);
 
   useEffect(() => {
     async function loadOrders(): Promise<void> {
-      // Load orders from API
+      const { data } = await api.get<Order[]>('orders');
+      setOrders(data);
     }
 
     loadOrders();
